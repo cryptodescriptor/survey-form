@@ -39,6 +39,10 @@
 	border-radius: 50%;
 }
 
+.wrapper input:checked + label::before {
+	background-color: rgb(223, 35, 89);
+}
+
 /*create check symbol with pseudo element*/
 .wrapper.check input + label::after {
 	content: "";
@@ -72,8 +76,4 @@
 /*reveal check for 'on' state*/
 .wrapper input:checked + label::after {
 	opacity: 1;
-}
-
-.wrapper input:checked + label::before {
-	background-color: rgb(223, 35, 89);
 }
