@@ -1,0 +1,218 @@
+html {
+	height: 100%;
+	/* Need Flex to force Panel overflow */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-flex: 1;
+	-ms-flex: 1 0 auto;
+	flex: 1 0 auto;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: local;
+	background-size: cover;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	-webkit-box-flex: 1;
+	    -ms-flex: 1 0 auto;
+	        flex: 1 0 auto;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	/* Survey Form Styles */
+	font-size: 10px;
+
+	/* Normalize */
+	font-family: -apple-system, 
+	BlinkMacSystemFont, 
+	"Segoe UI", 
+	"Roboto", 
+	"Helvetica Neue", 
+	Arial, 
+	sans-serif;
+
+	font-weight: 400;
+}
+
+.frosted-panel {
+	-webkit-box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
+	        box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
+	position: relative;
+	border-radius: 5px;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+svg {
+	border-radius: 5px;
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: -1
+}
+
+.content {
+	z-index: 1;
+	overflow: hidden;
+}
+
+#container {
+	width: 100%;
+}
+
+#title-wrapper {
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 100%;
+}
+
+#title {
+	font-family: 'Electrolize', sans-serif;
+	font-size: 2em;
+	background-color: #df2359;
+	color: white;
+	display: inline-block;
+	padding: 10px;
+	margin: 0;
+	border-radius: 5px;
+}
+
+#title-prefix,
+#title-postfix {
+	white-space: normal;
+}
+
+#description {
+	text-align: center;
+	font-size: 1.85em;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#survey-form {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.label:not(:nth-child(1)) {
+	padding-top: 20px;
+}
+
+.label {
+	display: block;
+	padding-bottom: 12px;
+	font-size: 2em;
+}
+
+.input-field {
+	width: 100%;
+	box-sizing: border-box;
+	background: transparent;
+	border: solid 2px white;
+	padding: 10px;
+	font-size: 1.5em;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #454545;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #454545;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #454545;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Old Safari */
+  color: #454545;
+}
+
+.wrapper:not(:last-child) {
+	margin-bottom: 15px;
+}
+
+#comments {
+	height: 80px;
+	resize: none;
+}
+
+button {
+	margin-top: 20px;
+	width: 100%;
+	padding: 12px;
+	border: solid 2px white;
+	border-radius: 5px;
+	background: rgb(223, 35, 89);
+	color: white;
+	cursor: pointer;
+	font-size: 1.75em;
+}
+
+button:hover {
+	background: rgb(237, 38, 95);
+}
+
+/* Media Queries */
+
+@media only screen and (min-width: 250px) {
+	#title-prefix,
+	#title-postfix {
+		white-space: nowrap;
+	}
+}
+
+@media only screen and (min-width: 450px) {
+	#title {
+		border-radius: 20px;
+	}
+
+	#container {
+		width: 90%;
+		margin: 0 auto;
+	}
+}
+
+@media only screen and (min-width: 525px) {
+	/* On larger screens, radio buttons should be inline */
+	.wrapper {
+		display: inline-block;
+	}
+
+	.wrapper:not(:last-child) {
+		margin-bottom: 0;
+		margin-right: 20px;
+	}
+
+	#title {
+		font-size: 2.5em;
+	}
+}
