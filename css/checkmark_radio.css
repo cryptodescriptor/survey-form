@@ -54,23 +54,29 @@
 	opacity: 0;
 	position: absolute;
 	top: 1px;
-	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	-webkit-transition: opacity 0.2s ease-in-out;
+	-o-transition: opacity 0.2s ease-in-out;
 	transition: opacity 0.2s ease-in-out;
 	width: 5px;
 }
 
 /*radio pseudo element styles*/
 .wrapper.radio input + label::after {
-    content: "";
-    opacity: 0;
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    left: 5px;
-    top: 5px;
-    background-color: white;
-    border-radius: 50%;
-    transition: opacity 0.2s ease-in-out;
+	content: "";
+	opacity: 0;
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	left: 5px;
+	top: 5px;
+	background-color: white;
+	border-radius: 50%;
+	-webkit-transition: opacity 0.2s ease-in-out;
+	-o-transition: opacity 0.2s ease-in-out;
+	transition: opacity 0.2s ease-in-out;
 }
 
 /*reveal check for 'on' state*/
