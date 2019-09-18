@@ -122,12 +122,12 @@ svg {
 }
 
 .label:not(:nth-child(1)) {
-	padding-top: 20px;
+	margin-top: 20px;
 }
 
 .label {
 	display: block;
-	padding-bottom: 12px;
+	margin-bottom: 12px;
 	font-size: 2em;
 }
 
