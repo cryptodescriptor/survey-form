@@ -6,7 +6,7 @@
 }
 
 /*style label to give some more space*/
-.wrapper label {
+.wrapper > label {
 	display: block;
 	padding: 0 0 0 30px;
 	font-size: 18px;
@@ -14,7 +14,7 @@
 }
 
 /*style and hide original checkbox*/
-.wrapper input {
+.wrapper > input {
 	height: 18px;
 	left: 0;
 	opacity: 0;
@@ -25,7 +25,7 @@
 }
 
 /*position new box*/
-.wrapper input + label::before {
+.wrapper > input + label::before {
 	background-color: rgb(44, 62, 80);
 	content: "";
 	height: 18px;
@@ -35,16 +35,16 @@
 	width: 18px;
 }
 
-.wrapper.radio input + label::before {
+.wrapper.radio > input + label::before {
 	border-radius: 50%;
 }
 
-.wrapper input:checked + label::before {
+.wrapper > input:checked + label::before {
 	background-color: rgb(223, 35, 89);
 }
 
 /*create check symbol with pseudo element*/
-.wrapper.check input + label::after {
+.wrapper.check > input + label::after {
 	content: "";
 	border: 3px solid white;
 	border-left: 0;
@@ -64,7 +64,7 @@
 }
 
 /*radio pseudo element styles*/
-.wrapper.radio input + label::after {
+.wrapper.radio > input + label::after {
 	content: "";
 	opacity: 0;
 	position: absolute;
@@ -80,6 +80,6 @@
 }
 
 /*reveal check for 'on' state*/
-.wrapper input:checked + label::after {
+.wrapper > input:checked + label::after {
 	opacity: 1;
 }
