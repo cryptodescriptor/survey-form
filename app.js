@@ -327,9 +327,8 @@ var frostedPanel = {
     } else {
       var scrollbarWidth = 0;
     }
-
-    // If scrollbar is visible
-    viewportWidth = (scrollbarWidth > 0) ? (viewportWidth+scrollbarWidth) : viewportWidth;
+    
+    viewportWidth = viewportWidth+scrollbarWidth;
 
     return [viewportWidth, viewportHeight];
   },
