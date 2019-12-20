@@ -277,7 +277,7 @@ var frostedPanel = {
     return widthOrHeight.endsWith('%');
   },
 
-  last_values : {
+  prev_panel_dimensions : {
     w : null,
     h : null
   },
@@ -285,20 +285,20 @@ var frostedPanel = {
   set_prev_values : function(w, h, viewportWidth, viewportHeight) {
     this.previous_viewport_w = viewportWidth;
     this.previous_viewport_h = viewportWidth;
-    this.last_values['w'] = w;
-    this.last_values['h'] = h;
+    this.prev_panel_dimensions['w'] = w;
+    this.prev_panel_dimensions['h'] = h;
   },
 
   need_repaint : function(w, h, viewportWidth, viewportHeight) {
-    var lv = this.last_values;
+    var pd = this.prev_panel_dimensions;
 
-    var needWidthRepaint = (lv['w'] === null ||
+    var needWidthRepaint = (pd['w'] === null ||
       w.endsWith('%') && viewportWidth !== this.previous_viewport_w ||
-      w !== lv['w']);
+      w !== pd['w']);
 
-    var needHeightRepaint = (lv['h'] === null ||
+    var needHeightRepaint = (pd['h'] === null ||
       h.endsWith('%') && viewportHeight !== this.previous_viewport_h ||
-      h !== lv['h']);
+      h !== pd['h']);
 
     if (needWidthRepaint || needHeightRepaint) {
       this.set_prev_values(w, h, viewportWidth, viewportHeight);
