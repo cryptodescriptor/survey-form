@@ -16,8 +16,7 @@ var frostedPanel = {
     svg : document.querySelector('svg'),
     panel : document.querySelector('.frosted-panel'),
     content : document.querySelector('.content'),
-    html : document.documentElement,
-    loading : document.querySelector('.page-loading__icon')
+    html : document.documentElement
   },
 
   config : {
@@ -181,17 +180,24 @@ var frostedPanel = {
     return true;
   },
 
-  is_suitable_breakpoint : function(breakpoint) {
-    var string = (this.config.maxWidth === true) ? 'max-width' : 'min-width';
-    return window.matchMedia('('+string+': '+breakpoint[0]+'px)').matches;
+  is_suitable_breakpoint : function(breakpoint, viewportWidth) {
+    var condition;
+
+    if (this.config.maxWidth === true) {
+      condition = viewportWidth <= breakpoint[0];
+    } else {
+      condition = viewportWidth >= breakpoint[0];
+    }
+
+    return (condition === true) ? true : false;
   },
 
-  find_suitable_breakpoint : function() {
+  find_suitable_breakpoint : function(viewportWidth) {
     var current, breakpoint = null;
 
     for (var i = 0; i < this.config.breakpoints.length; i++) {
       current = this.config.breakpoints[i];
-      if (this.is_suitable_breakpoint(current)) {
+      if (this.is_suitable_breakpoint(current, viewportWidth)) {
         breakpoint = current;
         continue;
       }
@@ -200,16 +206,18 @@ var frostedPanel = {
     return breakpoint;
   },
 
-  fetch_breakpoint : function() {
+  fetch_breakpoint : function(viewportWidth) {
     // if breakpoints are empty
     if (this.config.breakpoints.length === 0) return null;
 
     // if we don't currently need a breakpoint
-    if (!this.is_suitable_breakpoint(this.config.breakpoints[0])) {
-      return null;
+    if (this.config.maxWidth === true) {
+      if (viewportWidth > this.config.breakpoints[0][0]) return null;
+    } else {
+      if (viewportWidth < this.config.breakpoints[0][0]) return null;
     }
 
-    return this.find_suitable_breakpoint();
+    return this.find_suitable_breakpoint(viewportWidth);
   },
 
   auto : {
@@ -273,18 +281,9 @@ var frostedPanel = {
     return [coverWidth, coverHeight, scale];
   },
 
-  is_fixed_value : function(widthOrHeight) {
-    if (widthOrHeight === 'auto' || widthOrHeight.endsWith('px')) {
-      return true;
-    }
-  },
-
-  last_panel_width_fixed_or_auto : undefined,
-  last_panel_height_fixed_fixed_or_auto : undefined,
-
   set_panel_width_and_height : function(viewportWidth, viewportHeight) {
     // See if we hit a breakpoint
-    var breakpoint = this.fetch_breakpoint();
+    var breakpoint = this.fetch_breakpoint(viewportWidth);
 
     if (breakpoint === null) {
       var w = this.config.width;
@@ -293,10 +292,6 @@ var frostedPanel = {
       var w = breakpoint[1];
       var h = breakpoint[2];
     }
-
-    // Cache width and height
-    this.last_panel_width_fixed_or_auto = this.is_fixed_value(w);
-    this.last_panel_height_fixed_fixed_or_auto = this.is_fixed_value(h);
 
     // Convert to pixels and set width + height
     var w = this.set_pixel_val(w, viewportWidth, 'w');
@@ -323,32 +318,14 @@ var frostedPanel = {
     ];
   },
 
-  need_repaint : function(viewportWidth, viewportHeight) {
-    // Prevent repainting if dimension is fixed
-    // and only that particular viewport dimension
-    // changed. Or dimensions didnt change at all.
-    var panelWidthChange = (this.last_panel_height_fixed_fixed_or_auto === undefined ||
-      this.previous_viewport_w !== viewportWidth
-      && this.last_panel_width_fixed_or_auto === false);
-
-    var panelHeightChange = (this.last_panel_height_fixed_fixed_or_auto === undefined ||
-      this.previous_viewport_h !== viewportHeight
-      && this.last_panel_height_fixed_fixed_or_auto === false);
-
-    if (panelWidthChange || panelHeightChange) {
-      return true;
-    }
-
-    return false;
-  },
-
   prepare_pan_and_zoom : function() {
     // Get viewport width and height
     var viewPortWH = this.get_device_width_and_height();
     var viewportWidth = viewPortWH[0];
     var viewportHeight = viewPortWH[1];
-
-    if (!this.need_repaint()) {
+    
+    // Don't need to do anything if viewport size didn't change
+    if (this.viewport_size_not_changed(viewportWidth, viewportHeight)) {
       return null;
     }
 
@@ -423,7 +400,7 @@ var frostedPanel = {
     this.pan_and_zoom();
 
     // Hide loading and display panel
-    self.e.loading.style.display = 'none';
+    window.parent.postMessage('hideLoad', '*');
     this.e.panel.style.visibility = 'visible';
   },
 
