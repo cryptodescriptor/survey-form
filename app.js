@@ -433,7 +433,7 @@ var frostedPanel = {
     // Set content margin
     this.e.content.style.margin = frostedPanel.config.contentMargin + 'px';
 
-    // start resize eventListener to pan and zoom
+    // Start resize eventListener to pan and zoom
     window.addEventListener("resize", function() {
       frostedPanel.pan_and_zoom();
     });
