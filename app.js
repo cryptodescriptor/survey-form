@@ -16,8 +16,7 @@ var frostedPanel = {
     svg : document.querySelector('svg'),
     panel : document.querySelector('.frosted-panel'),
     content : document.querySelector('.content'),
-    html : document.documentElement,
-    loading : document.querySelector('.page-loading__icon')
+    html : document.documentElement
   },
 
   config : {
@@ -273,41 +272,6 @@ var frostedPanel = {
     return [coverWidth, coverHeight, scale];
   },
 
-  is_fixed_value : function(widthOrHeight) {
-    return widthOrHeight.endsWith('%');
-  },
-
-  prev_panel_dimensions : {
-    w : null,
-    h : null
-  },
-
-  set_prev_values : function(w, h, viewportWidth, viewportHeight) {
-    this.previous_viewport_w = viewportWidth;
-    this.previous_viewport_h = viewportWidth;
-    this.prev_panel_dimensions['w'] = w;
-    this.prev_panel_dimensions['h'] = h;
-  },
-
-  need_repaint : function(w, h, viewportWidth, viewportHeight) {
-    var pd = this.prev_panel_dimensions;
-
-    var needWidthRepaint = (pd['w'] === null ||
-      w.endsWith('%') && viewportWidth !== this.previous_viewport_w ||
-      w !== pd['w']);
-
-    var needHeightRepaint = (pd['h'] === null ||
-      h.endsWith('%') && viewportHeight !== this.previous_viewport_h ||
-      h !== pd['h']);
-
-    if (needWidthRepaint || needHeightRepaint) {
-      this.set_prev_values(w, h, viewportWidth, viewportHeight);
-      return true;
-    }
-
-    return false;
-  },
-
   set_panel_width_and_height : function(viewportWidth, viewportHeight) {
     // See if we hit a breakpoint
     var breakpoint = this.fetch_breakpoint();
@@ -318,11 +282,6 @@ var frostedPanel = {
     } else {
       var w = breakpoint[1];
       var h = breakpoint[2];
-    }
-
-    // Dont repaint if values didnt change
-    if (!this.need_repaint(w, h, viewportWidth, viewportHeight)) {
-      return null;
     }
 
     // Convert to pixels and set width + height
@@ -355,19 +314,17 @@ var frostedPanel = {
     var viewPortWH = this.get_device_width_and_height();
     var viewportWidth = viewPortWH[0];
     var viewportHeight = viewPortWH[1];
-
-    if (this.viewport_size_not_changed()) {
+    
+    // Don't need to do anything if viewport size didn't change
+    if (this.viewport_size_not_changed(viewportWidth, viewportHeight)) {
       return null;
     }
+
+    this.previous_viewport_w = viewportWidth;
+    this.previous_viewport_h = viewportWidth;
 
     // Set Panel width and height
     var wh = this.set_panel_width_and_height(viewportWidth, viewportHeight);
-
-    // returns null when dont need a repaint
-    if (!wh) {
-      return null;
-    }
-
     var panelW = wh[0];
     var panelH = wh[1];
 
@@ -423,6 +380,20 @@ var frostedPanel = {
 
     if (img.complete) img.onload();
   },
+  
+  start_panel : function() {
+    // Start Resize Listener
+    window.addEventListener("resize", function() {
+      frostedPanel.pan_and_zoom();
+    });
+
+    // Do initial pan and zoom
+    this.pan_and_zoom();
+
+    // Hide loading and display panel
+    window.parent.postMessage('hideLoad', '*');
+    this.e.panel.style.visibility = 'visible';
+  },
 
   init : function() {
     var bg = this.bg_img;
@@ -433,17 +404,11 @@ var frostedPanel = {
     // Set content margin
     this.e.content.style.margin = frostedPanel.config.contentMargin + 'px';
 
-    // Start resize eventListener to pan and zoom
-    window.addEventListener("resize", function() {
-      frostedPanel.pan_and_zoom();
-    });
+    var self = this;
 
-    // Do initial pan and zoom
-    this.pan_and_zoom();
-
-    // Hide loading and display panel
-    this.e.loading.style.display = 'none';
-    this.e.panel.style.visibility = 'visible';
+    window.onload =  function() {
+      self.start_panel.call(self);
+    };
   }
 }
 
