@@ -43,6 +43,13 @@ select {
 	padding: 0 .5em;
 	color: #fff;
 	cursor: pointer;
+	border: 0;
+	outline: 0;
+}
+
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 white;
 }
 
 /* Arrow */
@@ -63,4 +70,9 @@ select {
 /* Transition */
 .select:hover::after {
 	color: white;
+}
+
+.select.focused {
+	box-shadow: 0 0 0 3px #ffbf47;
+	outline: 3px solid transparent; /* For Windows high contrast mode. */
 }
