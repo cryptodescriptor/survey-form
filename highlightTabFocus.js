@@ -1,4 +1,4 @@
-/* Highlight checkboxes and radio buttons only when focused using TAB */
+/* Highlight checkboxes, radio buttons, and select's, only when focused using TAB */
 
 var tabbed = false;
 
