@@ -21,14 +21,13 @@ window.addEventListener('mousedown', function(e) {
 }, true); /* as soon as captured */
 
 var radios = document.querySelectorAll('input[type="radio"]'),
-	checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	checkboxes = document.querySelectorAll('input[type="checkbox"]'),
+  cachedAdjacentElements = {};
 
 // ie11 nodelist forEach
 if(window.NodeList && !NodeList.prototype.forEach) {
 	NodeList.prototype.forEach = Array.prototype.forEach;
 }
-
-var cachedAdjacentElements = {};
 
 [radios, checkboxes].forEach(function(elements) {
 	elements.forEach(function(element) {
