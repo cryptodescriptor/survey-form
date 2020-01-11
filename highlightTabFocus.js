@@ -47,17 +47,20 @@ var cachedAdjacentElements = {};
 	});
 });
 
-var selects = document.querySelectorAll('select');
+var selects = document.querySelectorAll('select'),
+  cachedSelectParents = {};
 
 selects.forEach(function(select) {
+  cachedSelectParents[select.id] = select.parentElement;
+
   select.addEventListener('focus', function(e) {
     if (tabbed) {
-      e.target.parentElement.classList.add('focused');
+      cachedSelectParents[e.target.id].classList.add('focused');
       tabbed = false;
     }
   });
 
   select.addEventListener('blur', function(e) {
-    e.target.parentElement.classList.remove('focused');
+    cachedSelectParents[e.target.id].classList.remove('focused');
   });
 });
