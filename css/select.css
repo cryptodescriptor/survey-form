@@ -47,6 +47,7 @@ select {
 	outline: 0;
 }
 
+/* Remove mozilla outline when focused */
 select:-moz-focusring {
     color: transparent;
     text-shadow: 0 0 0 white;
