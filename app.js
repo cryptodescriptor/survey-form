@@ -442,10 +442,10 @@ var frostedPanel = {
       var viewPortWH = frostedPanel.get_device_width_and_height();
 
       if (frostedPanel.isMobileDevice()) {
-        console.log('mob');
+        alert('mob');
         frostedPanel.init_resize_timeout(viewPortWH);
       } else {
-        console.log('not mob');
+        alert('not mob');
         frostedPanel.pan_and_zoom(viewPortWH);
       }
     });
