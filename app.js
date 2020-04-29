@@ -348,8 +348,9 @@ var frostedPanel = {
     ];
   },
 
-  prepare_pan_and_zoom : function(viewPortWH) {
+  prepare_pan_and_zoom : function() {
     // Get viewport width and height
+    var viewPortWH = this.get_device_width_and_height();
     var viewportWidth = viewPortWH[0];
     var viewportHeight = viewPortWH[1];
     
@@ -387,8 +388,8 @@ var frostedPanel = {
     return [panW, panH, scale];
   },
 
-  pan_and_zoom : function(viewPortWH) {
-    var panW_panH_scale = this.prepare_pan_and_zoom(viewPortWH);
+  pan_and_zoom : function() {
+    var panW_panH_scale = this.prepare_pan_and_zoom();
     if (panW_panH_scale === null) return;
     var panW = panW_panH_scale[0];
     var panH = panW_panH_scale[1];
@@ -418,44 +419,15 @@ var frostedPanel = {
 
     if (img.complete) img.onload();
   },
-
-  isMobileDevice : function() {
-      return (
-        typeof window.orientation !== "undefined") ||
-        (navigator.userAgent.indexOf('IEMobile') !== -1
-      );
-  },
-
-  resize_timeout : null,
-
-  init_resize_timeout : function(viewPortWH) {
-    // Reset timeout to stop repainting too often
-    clearTimeout(frostedPanel.resize_timeout);
-
-    frostedPanel.resize_timeout = setTimeout(function() {
-      frostedPanel.pan_and_zoom(viewPortWH);
-    }, 500);
-  },
-
-  init_resize_listener : function() {
-    window.addEventListener("resize", function() {
-      var viewPortWH = frostedPanel.get_device_width_and_height();
-
-      if (frostedPanel.isMobileDevice()) {
-        frostedPanel.init_resize_timeout(viewPortWH);
-      } else {
-        frostedPanel.pan_and_zoom(viewPortWH);
-      }
-    });
-  },
   
   start_panel : function() {
     // Start Resize Listener
-    this.init_resize_listener();
+    window.addEventListener("resize", function() {
+      frostedPanel.pan_and_zoom();
+    });
 
     // Do initial pan and zoom
-    var viewPortWH = this.get_device_width_and_height();
-    this.pan_and_zoom(viewPortWH);
+    this.pan_and_zoom();
 
     // Hide loading and display panel
     window.parent.postMessage('hideLoad', '*');
