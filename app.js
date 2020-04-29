@@ -434,7 +434,7 @@ var frostedPanel = {
 
     frostedPanel.resize_timeout = setTimeout(function() {
       frostedPanel.pan_and_zoom(viewPortWH);
-    }, 50);
+    }, 500);
   },
 
   init_resize_listener : function() {
@@ -442,10 +442,8 @@ var frostedPanel = {
       var viewPortWH = frostedPanel.get_device_width_and_height();
 
       if (frostedPanel.isMobileDevice()) {
-        alert('mob');
         frostedPanel.init_resize_timeout(viewPortWH);
       } else {
-        alert('not mob');
         frostedPanel.pan_and_zoom(viewPortWH);
       }
     });
