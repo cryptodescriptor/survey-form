@@ -426,20 +426,23 @@ var frostedPanel = {
       );
   },
 
-  init_resize_listener : function() {
-    var resize_timeout = null;
+  resize_timeout : null,
 
+  init_resize_timeout : function(viewPortWH) {
+    // Reset timeout to stop repainting too often
+    clearTimeout(frostedPanel.resize_timeout);
+
+    frostedPanel.resize_timeout = setTimeout(function() {
+      frostedPanel.pan_and_zoom(viewPortWH);
+    }, 50);
+  },
+
+  init_resize_listener : function() {
     window.addEventListener("resize", function() {
       var viewPortWH = frostedPanel.get_device_width_and_height();
 
       if (frostedPanel.isMobileDevice()) {
-        // Reset timeout to stop repainting too often
-        clearTimeout(resize_timeout);
-
-        resize_timeout = setTimeout(function() {
-          console.log(viewPortWH);
-          frostedPanel.pan_and_zoom(viewPortWH);
-        }, 50);
+        frostedPanel.init_resize_timeout(viewPortWH);
       } else {
         frostedPanel.pan_and_zoom(viewPortWH);
       }
