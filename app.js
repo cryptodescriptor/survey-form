@@ -24,7 +24,8 @@ var frostedPanel = {
   },
 
   error : function(s) {
-    console.log(s)
+    console.log(s);
+    return false;
   },
 
   valid_num : function(str) {
@@ -163,23 +164,20 @@ var frostedPanel = {
 
     // check attribute exists and isnt empty
     if (!panel_dimensions) {
-      this.error('Empty/Missing required attr "'+attr+'"!');
-      return false;
+      return this.error('Empty/Missing required attr "'+attr+'"!');
     }
 
     var wh = panel_dimensions.split(' ');
 
     // verify we have 2 values
     if (wh.length !== 2) {
-      this.error('Unexpected length "' + wh.length + '" for "'+attr+'" attr!');
-      return false;
+      return this.error('Unexpected length "' + wh.length + '" for "'+attr+'" attr!');
     }
 
     // validate width and height values
     for (var i = 0; i < wh.length; i++) {
       if (!this.validate_wh(wh[i])) {
-        this.error('Invalid value "' + wh[0] + '" for "'+attr+'" attr!');
-        return false;
+        return this.error('Invalid value "' + wh[0] + '" for "'+attr+'" attr!');
       }
     }
 
