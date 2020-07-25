@@ -126,8 +126,7 @@ var frostedPanel = {
     var brTypes = ['min-width', 'max-width'];
 
     if (brTypes.indexOf(brType.toLowerCase()) === -1) {
-      this.error('Invalid breakpoint-type attribute!');
-      return false;
+      return this.error('Invalid breakpoint-type attribute!');
     }
 
     return true;
