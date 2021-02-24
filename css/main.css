@@ -51,7 +51,6 @@ body {
 }
 
 svg {
-	border-radius: 5px;
 	overflow: hidden;
 	height: 100%;
 	width: 100%;
@@ -62,7 +61,6 @@ svg {
 }
 
 .content {
-	position: relative;
 	z-index: 1;
 }
 
