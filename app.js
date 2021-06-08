@@ -330,10 +330,10 @@ var frostedPanel = {
   previous_viewport_w : null,
   previous_viewport_h : null,
 
-  viewport_size_not_changed : function() {
+  viewport_size_not_changed : function(viewportWidth, viewportHeight) {
     return (
-        this.previous_viewport_w === document.documentElement.clientWidth &&
-        this.previous_viewport_h === document.documentElement.clientHeight
+        this.previous_viewport_w === viewportWidth &&
+        this.previous_viewport_h === viewportHeight
       );
   },
 
@@ -355,8 +355,8 @@ var frostedPanel = {
       return null;
     }
 
-    this.previous_viewport_w = document.documentElement.clientWidth;
-    this.previous_viewport_h = document.documentElement.clientHeight;
+    this.previous_viewport_w = viewportWidth;
+    this.previous_viewport_h = viewportWidth;
 
     // Set Panel width and height
     var wh = this.set_panel_width_and_height(viewportWidth, viewportHeight);
