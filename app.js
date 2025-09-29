@@ -424,11 +424,28 @@ var frostedPanel = {
       // force reflow
       document.body.offsetHeight;
 
-      frostedPanel.pan_and_zoom(); // first attempt
-      setTimeout(function () {
-        document.body.offsetHeight; // force again
-        frostedPanel.pan_and_zoom(); // corrects after viewport settles
-      }, 200);
+    // Handle orientation change (cross-browser)
+    window.addEventListener("orientationchange", function () {
+      var lastW = 0, lastH = 0, attempts = 0;
+
+      function check() {
+        var w = window.innerWidth || document.documentElement.clientWidth;
+        var h = window.innerHeight || document.documentElement.clientHeight;
+
+        // Only re-run if size actually changed
+        if (w !== lastW || h !== lastH) {
+          frostedPanel.pan_and_zoom();
+          lastW = w;
+          lastH = h;
+        }
+
+        attempts++;
+        if (attempts < 20) { // ~20 frames ≈ 300–400ms
+          requestAnimationFrame(check);
+        }
+      }
+
+      requestAnimationFrame(check);
     });
 
     // Do initial pan and zoom
