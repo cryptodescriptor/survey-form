@@ -404,18 +404,17 @@ var frostedPanel = {
 
     var self = this;
 
-    if (img.complete) {
-      if (!self.started) { 
+    function startIfNotStarted() {
+      if (!self.started) {
         self.started = true;
         callback();
       }
+    }
+
+    if (img.complete) {
+      startIfNotStarted();
     } else {
-      img.onload = function() {
-        if (!self.started) { 
-          self.started = true;
-          callback();
-        }
-      };
+      img.onload = startIfNotStarted;
     }
 
     img.src = src;
