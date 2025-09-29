@@ -420,6 +420,11 @@ var frostedPanel = {
       frostedPanel.pan_and_zoom();
     });
 
+    window.addEventListener("orientationchange", function () {
+      frostedPanel.pan_and_zoom();
+    });
+
+
     // Do initial pan and zoom
     this.pan_and_zoom();
 
