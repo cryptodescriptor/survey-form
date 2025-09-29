@@ -424,7 +424,7 @@ var frostedPanel = {
     this.pan_and_zoom();
 
     // Hide loading and display panel
-    window.parent.postMessage('hideLoad', '*');
+    loading.style.display = 'none';
     this.e.panel.style.visibility = 'visible';
   },
 
