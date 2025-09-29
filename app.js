@@ -333,7 +333,7 @@ var frostedPanel = {
   viewport_size_not_changed: function(w,h) {
     return Math.abs(this.previous_viewport_w - w) < 1 &&
            Math.abs(this.previous_viewport_h - h) < 1;
-  }
+  },
 
   get_device_width_and_height : function() {
     return [
