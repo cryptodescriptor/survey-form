@@ -356,7 +356,7 @@ var frostedPanel = {
     }
 
     this.previous_viewport_w = viewportWidth;
-    this.previous_viewport_h = viewportWidth;
+    this.previous_viewport_h = viewportHeight;
 
     // Set Panel width and height
     var wh = this.set_panel_width_and_height(viewportWidth, viewportHeight);
@@ -424,7 +424,7 @@ var frostedPanel = {
     this.pan_and_zoom();
 
     // Hide loading and display panel
-    window.parent.postMessage('hideLoad', '*');
+    loading.style.display = 'none';
     this.e.panel.style.visibility = 'visible';
   },
 
