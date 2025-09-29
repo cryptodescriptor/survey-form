@@ -330,12 +330,10 @@ var frostedPanel = {
   previous_viewport_w : null,
   previous_viewport_h : null,
 
-  viewport_size_not_changed : function(viewportWidth, viewportHeight) {
-    return (
-        this.previous_viewport_w === viewportWidth &&
-        this.previous_viewport_h === viewportHeight
-      );
-  },
+  viewport_size_not_changed: function(w,h) {
+    return Math.abs(this.previous_viewport_w - w) < 1 &&
+           Math.abs(this.previous_viewport_h - h) < 1;
+  }
 
   get_device_width_and_height : function() {
     return [
@@ -404,11 +402,16 @@ var frostedPanel = {
     
     var img = new Image();
 
-    img.onload = function() {
-      if (!this.started) { 
-        this.started = true;
+    var self = this;
+
+    if (img.complete) {
+      self.started = true;
+      callback();
+    } else {
+      img.onload = function() {
+        self.started = true;
         callback();
-      }
+      };
     }
 
     img.src = src;
@@ -420,39 +423,11 @@ var frostedPanel = {
       frostedPanel.pan_and_zoom();
     });
 
-    window.addEventListener("orientationchange", function () {
-      // force reflow
-      document.body.offsetHeight;
-
-    // Handle orientation change (cross-browser)
-    window.addEventListener("orientationchange", function () {
-      var lastW = 0, lastH = 0, attempts = 0;
-
-      function check() {
-        var w = window.innerWidth || document.documentElement.clientWidth;
-        var h = window.innerHeight || document.documentElement.clientHeight;
-
-        // Only re-run if size actually changed
-        if (w !== lastW || h !== lastH) {
-          frostedPanel.pan_and_zoom();
-          lastW = w;
-          lastH = h;
-        }
-
-        attempts++;
-        if (attempts < 20) { // ~20 frames ≈ 300–400ms
-          requestAnimationFrame(check);
-        }
-      }
-
-      requestAnimationFrame(check);
-    });
-
     // Do initial pan and zoom
     this.pan_and_zoom();
 
     // Hide loading and display panel
-    loading.style.display = 'none';
+    window.parent.postMessage('hideLoad', '*');
     this.e.panel.style.visibility = 'visible';
   },
 
