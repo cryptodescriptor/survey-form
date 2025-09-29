@@ -405,12 +405,16 @@ var frostedPanel = {
     var self = this;
 
     if (img.complete) {
-      self.started = true;
-      callback();
-    } else {
-      img.onload = function() {
+      if (!self.started) { 
         self.started = true;
         callback();
+      }
+    } else {
+      img.onload = function() {
+        if (!self.started) { 
+          self.started = true;
+          callback();
+        }
       };
     }
 
