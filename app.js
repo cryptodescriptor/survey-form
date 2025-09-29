@@ -421,9 +421,15 @@ var frostedPanel = {
     });
 
     window.addEventListener("orientationchange", function () {
-      frostedPanel.pan_and_zoom();
-    });
+      // force reflow
+      document.body.offsetHeight;
 
+      frostedPanel.pan_and_zoom(); // first attempt
+      setTimeout(function () {
+        document.body.offsetHeight; // force again
+        frostedPanel.pan_and_zoom(); // corrects after viewport settles
+      }, 200);
+    });
 
     // Do initial pan and zoom
     this.pan_and_zoom();
