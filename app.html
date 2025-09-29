@@ -26,91 +26,97 @@
 	</style>
 </head>
 <body space-top-bot="50px">
-	<div class="frosted-panel" panel-dimensions="90% auto" breakpoint-type="min-width" breakpoints="900px 750px auto">
-		<svg>
-			<filter id="blurMe" filterRes="1200" color-interpolation-filters="sRGB">
-				<feGaussianBlur in="SourceGraphic" stdDeviation="25" />
-			</filter>
+	<div id="wrapper">
+		<div id="loading" class="flex-center-col">
+			<div class="page-loading__icon"></div>
+		</div>
 
-			<image xlink:href="./img/bg_optimized.jpg" x="0" y="0" width="2560" height="1440" filter="url(#blurMe)" />
-		</svg>
+		<div class="frosted-panel" panel-dimensions="90% auto" breakpoint-type="min-width" breakpoints="900px 750px auto">
+			<svg>
+				<filter id="blurMe" filterRes="1200" color-interpolation-filters="sRGB">
+					<feGaussianBlur in="SourceGraphic" stdDeviation="25" />
+				</filter>
 
-		<div class="content" content-margin="15px">
-			<div id="container">
-				<div id="title-wrapper">
-					<h1 id="title"><span id="title-prefix">Ski Resort</span> - <span id="title-postfix">Survey Form</span></h1>
+				<image xlink:href="./img/bg_optimized.jpg" x="0" y="0" width="2560" height="1440" filter="url(#blurMe)" />
+			</svg>
+
+			<div class="content" content-margin="15px">
+				<div id="container">
+					<div id="title-wrapper">
+						<h1 id="title"><span id="title-prefix">Ski Resort</span> - <span id="title-postfix">Survey Form</span></h1>
+					</div>
+
+					<p id="description">Please quickly provide us with valuable feedback for improving our resort.</p>
+
+					<form id="survey-form" autocomplete="off">
+						<label class="label" id="name-label" for="name">* Name:</label>
+						<input type="text" name="name" id="name" class="input-field" placeholder="Enter your name" required>
+
+						<label class="label" id="email-label" for="email">* Email:</label>
+						<input type="email" name="email" id="email" class="input-field" placeholder="Enter your Email" required>
+
+						<label class="label" id="number-label" for="number">* Age:</label>
+						<input type="number" name="age" id="number" min="1" max="125" class="input-field" placeholder="How old are you?" required>
+
+						<label class="label" for="dropdown">Which activity(s) did you partake in?</label>
+						<div class="select">
+							<select name="activity" id="dropdown" required>
+								<option selected disabled>Choose an option</option>
+								<option value="skiing">Skiing</option>
+								<option value="snowboarding">Snowboarding</option>
+								<option value="both">Both</option>
+							</select>
+						</div>
+
+						<label class="label" for="userRatings">Would you recommend our resort to a friend?</label>
+						<div id="userRatings">
+							<div class="wrapper radio">
+								<input id="rating" name="radio" type="radio" value="1" checked="checked">
+								<label for="rating">Certainly</label>
+							</div>
+
+							<div class="wrapper radio">
+								<input id="rating-1" name="radio" type="radio" value="2">
+								<label for="rating-1">Possibly</label>
+							</div>
+
+							<div class="wrapper radio">
+								<input id="rating-2" name="radio" type="radio" value="3">
+								<label for="rating-2">Not Sure</label>
+							</div>
+						</div>
+
+						<label class="label" for="stay-duration">How long was your stay?</label>
+						<div class="select">
+							<select name="stay-duration" id="stay-duration" required>
+								<option selected disabled>Choose an option</option>
+								<option value="1">Less than 7 days</option>
+								<option value="2">A week or more</option>
+							</select>
+						</div>
+
+						<label class="label" for="preferences">Tick anything you think we can improve:</label>
+						<div id="preferences">
+							<div class="wrapper check">
+								<input id="prefer" name="prefer" type="checkbox" value="1">
+								<label for="prefer">Hotel</label>
+							</div>
+							<div class="wrapper check">
+								<input id="prefer-1" name="prefer" type="checkbox" value="2">
+								<label for="prefer-1">Equipment</label>
+							</div>
+							<div class="wrapper check">
+								<input id="prefer-2" name="prefer" type="checkbox" value="3">
+								<label for="prefer-2">Service</label>
+							</div>
+						</div>
+
+						<label class="label" for="comments">Any Comments or Suggestions?</label>
+						<textarea id="comments" class="input-field" name="comment" placeholder="Enter your comment here..."></textarea>
+
+						<button id="submit" type="submit">Submit</button>
+					</form>
 				</div>
-
-				<p id="description">Please quickly provide us with valuable feedback for improving our resort.</p>
-
-				<form id="survey-form" autocomplete="off">
-					<label class="label" id="name-label" for="name">* Name:</label>
-					<input type="text" name="name" id="name" class="input-field" placeholder="Enter your name" required>
-
-					<label class="label" id="email-label" for="email">* Email:</label>
-					<input type="email" name="email" id="email" class="input-field" placeholder="Enter your Email" required>
-
-					<label class="label" id="number-label" for="number">* Age:</label>
-					<input type="number" name="age" id="number" min="1" max="125" class="input-field" placeholder="How old are you?" required>
-
-					<label class="label" for="dropdown">Which activity(s) did you partake in?</label>
-					<div class="select">
-						<select name="activity" id="dropdown" required>
-							<option selected disabled>Choose an option</option>
-							<option value="skiing">Skiing</option>
-							<option value="snowboarding">Snowboarding</option>
-							<option value="both">Both</option>
-						</select>
-					</div>
-
-					<label class="label" for="userRatings">Would you recommend our resort to a friend?</label>
-					<div id="userRatings">
-						<div class="wrapper radio">
-							<input id="rating" name="radio" type="radio" value="1" checked="checked">
-							<label for="rating">Certainly</label>
-						</div>
-
-						<div class="wrapper radio">
-							<input id="rating-1" name="radio" type="radio" value="2">
-							<label for="rating-1">Possibly</label>
-						</div>
-
-						<div class="wrapper radio">
-							<input id="rating-2" name="radio" type="radio" value="3">
-							<label for="rating-2">Not Sure</label>
-						</div>
-					</div>
-
-					<label class="label" for="stay-duration">How long was your stay?</label>
-					<div class="select">
-						<select name="stay-duration" id="stay-duration" required>
-							<option selected disabled>Choose an option</option>
-							<option value="1">Less than 7 days</option>
-							<option value="2">A week or more</option>
-						</select>
-					</div>
-
-					<label class="label" for="preferences">Tick anything you think we can improve:</label>
-					<div id="preferences">
-						<div class="wrapper check">
-							<input id="prefer" name="prefer" type="checkbox" value="1">
-							<label for="prefer">Hotel</label>
-						</div>
-						<div class="wrapper check">
-							<input id="prefer-1" name="prefer" type="checkbox" value="2">
-							<label for="prefer-1">Equipment</label>
-						</div>
-						<div class="wrapper check">
-							<input id="prefer-2" name="prefer" type="checkbox" value="3">
-							<label for="prefer-2">Service</label>
-						</div>
-					</div>
-
-					<label class="label" for="comments">Any Comments or Suggestions?</label>
-					<textarea id="comments" class="input-field" name="comment" placeholder="Enter your comment here..."></textarea>
-
-					<button id="submit" type="submit">Submit</button>
-				</form>
 			</div>
 		</div>
 	</div>
